@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/blockMenuItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/blockfragment"
+        android:title="blockFragment"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/itemMenuItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:icon="@drawable/itemfragment"
+        android:title="itemFragment"
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mobMenuItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:icon="@drawable/mobfragment"
+        android:title="mobFragment"
+        android:visible="true"
+        app:showAsAction="always" />
+</menu>

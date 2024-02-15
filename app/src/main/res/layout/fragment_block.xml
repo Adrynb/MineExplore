@@ -1,0 +1,41 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.example.mineexplore.Block" />
+        <variable
+            name="block"
+            type="com.example.mineexplore.Block" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/listbackground"
+        tools:context=".Fragments.BlockFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/addMob"
+                android:layout_width="114dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="148dp"
+                android:layout_marginEnd="149dp"
+                android:layout_marginBottom="24dp"
+                android:text="AÑADIR"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listaBlock"
+            android:layout_width="match_parent"
+            android:layout_height="645dp"
+            android:layout_weight="1" />
+    </FrameLayout>
+</layout>

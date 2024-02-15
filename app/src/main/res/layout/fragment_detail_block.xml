@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailsFragments.DetailBlock">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="372dp"
+            android:layout_height="493dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="23dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="351dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/nombreLabel"
+                    android:layout_width="159dp"
+                    android:layout_height="match_parent"
+                    android:text="Nombre:"
+                    android:textAlignment="viewStart" />
+
+                <TextView
+                    android:id="@+id/nombreDetail"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="Nombre del objeto"
+                    android:textAlignment="viewStart" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textAlignment="center">
+
+                <TextView
+                    android:id="@+id/imageURLLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Image URL:"
+                    android:textAlignment="viewStart" />
+
+                <ImageView
+                    android:id="@+id/imageURLDetail"
+                    android:layout_width="216dp"
+                    android:layout_height="wrap_content"
+                    android:text="URL de la imagen"
+                    android:textAlignment="viewStart" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/descripcionLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción:"
+                    android:textAlignment="viewStart" />
+
+                <TextView
+                    android:id="@+id/descripcionDetail"
+                    android:layout_width="197dp"
+                    android:layout_height="match_parent"
+                    android:text="Descripción del objeto"
+                    android:textAlignment="viewStart" />
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/editarLista"
+            android:layout_width="113dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="142dp"
+            android:layout_marginEnd="156dp"
+            android:layout_marginBottom="136dp"
+            android:text="EDITAR"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
