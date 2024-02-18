@@ -1,33 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/listbackground"
-    tools:context=".Fragments.ItemFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/listbackground"
+        tools:context=".Fragments.ItemFragment">
 
-        <Button
-            android:id="@+id/addMob"
-            android:layout_width="114dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="148dp"
-            android:layout_marginEnd="149dp"
-            android:layout_marginBottom="24dp"
-            android:text="AÑADIR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaItem"
-        android:layout_width="match_parent"
-        android:layout_height="645dp"
-        android:layout_weight="1"></androidx.recyclerview.widget.RecyclerView>
+            <Button
+                android:id="@+id/addMob"
+                android:layout_width="114dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="148dp"
+                android:layout_marginEnd="149dp"
+                android:layout_marginBottom="24dp"
+                android:text="AÑADIR"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listaItem"
+            android:layout_width="match_parent"
+            android:layout_height="645dp"
+            android:layout_weight="1"
+            android:layout_below="@+id/addMob"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"/>
+    </FrameLayout>
+</layout>

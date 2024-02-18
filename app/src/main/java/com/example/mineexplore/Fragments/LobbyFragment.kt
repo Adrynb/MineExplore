@@ -30,7 +30,6 @@ class LobbyFragment : Fragment() {
 
         imageView = requireActivity().findViewById(R.id.imageViewMineExplore)
 
-        // Deshabilitar la imagen cuando se crea el fragmento
         (requireActivity() as MainActivity).disableImageViewClick()
 
         buttonItem.setOnClickListener {

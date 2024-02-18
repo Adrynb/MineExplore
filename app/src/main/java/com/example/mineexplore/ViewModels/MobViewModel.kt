@@ -27,7 +27,7 @@ class MobViewModel : ViewModel() {
         mobList.add(
             Mob(
                 "Creeper",
-                "https://ficcion-sin-limites.fandom.com/es/wiki/Creeper?file=Creeper.png",
+                "https://static.wikia.nocookie.net/minecraft_es_gamepedia/images/b/b2/Creeper1.png/revision/latest?cb=20210923172737",
                 "Una criatura explosiva que se acerca sigilosamente para explotar"
             )
         )

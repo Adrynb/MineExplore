@@ -4,82 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/minecraftblocks"
     tools:context=".DetailsFragments.DetailBlock">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TableLayout
-            android:layout_width="372dp"
-            android:layout_height="493dp"
-            android:layout_marginStart="16dp"
+        <TextView
+            android:id="@+id/nombreBlockDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="23dp"
+            android:text="Nombre:"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/imagenDetailBlock"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TableRow
-                android:layout_width="351dp"
-                android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imagenDetailBlock"
+            android:layout_width="245dp"
+            android:layout_height="261dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/descripcionBlockDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombreBlockDetail" />
 
-                <TextView
-                    android:id="@+id/nombreLabel"
-                    android:layout_width="159dp"
-                    android:layout_height="match_parent"
-                    android:text="Nombre:"
-                    android:textAlignment="viewStart" />
-
-                <TextView
-                    android:id="@+id/nombreDetail"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="Nombre del objeto"
-                    android:textAlignment="viewStart" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textAlignment="center">
-
-                <TextView
-                    android:id="@+id/imageURLLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Image URL:"
-                    android:textAlignment="viewStart" />
-
-                <ImageView
-                    android:id="@+id/imageURLDetail"
-                    android:layout_width="216dp"
-                    android:layout_height="wrap_content"
-                    android:text="URL de la imagen"
-                    android:textAlignment="viewStart" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/descripcionLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Descripción:"
-                    android:textAlignment="viewStart" />
-
-                <TextView
-                    android:id="@+id/descripcionDetail"
-                    android:layout_width="197dp"
-                    android:layout_height="match_parent"
-                    android:text="Descripción del objeto"
-                    android:textAlignment="viewStart" />
-            </TableRow>
-
-        </TableLayout>
+        <TextView
+            android:id="@+id/descripcionBlockDetail"
+            android:layout_width="392dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="monospace"
+            android:text="Descripción:"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintBottom_toTopOf="@+id/editarLista"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imagenDetailBlock" />
 
         <Button
             android:id="@+id/editarLista"
@@ -87,10 +62,11 @@
             android:layout_height="52dp"
             android:layout_marginStart="142dp"
             android:layout_marginEnd="156dp"
-            android:layout_marginBottom="136dp"
+            android:layout_marginBottom="16dp"
             android:text="EDITAR"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

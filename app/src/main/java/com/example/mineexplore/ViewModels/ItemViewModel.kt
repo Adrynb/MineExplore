@@ -35,4 +35,3 @@ class ItemViewModel : ViewModel() {
         itemList.add(item)
     }
 }
-

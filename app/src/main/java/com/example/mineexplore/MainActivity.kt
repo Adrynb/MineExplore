@@ -1,18 +1,15 @@
 package com.example.mineexplore
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mineexplore.Fragments.LobbyFragment
 import com.example.mineexplore.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
-    private lateinit var imageView : ImageView
+    private lateinit var binding: ActivityMainBinding
     private var imageViewClickable = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +19,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        imageView = findViewById(R.id.imageViewMineExplore)
-        imageView.setOnClickListener {
+        binding.imageViewMineExplore.setOnClickListener {
             if (imageViewClickable) {
                 supportFragmentManager.beginTransaction().apply {
                     replace(R.id.fragment_container, LobbyFragment())
@@ -53,8 +49,7 @@ class MainActivity : AppCompatActivity() {
         imageViewClickable = false
     }
 
-    fun enableImageViewClick(){
+    fun enableImageViewClick() {
         imageViewClickable = true
     }
-
 }

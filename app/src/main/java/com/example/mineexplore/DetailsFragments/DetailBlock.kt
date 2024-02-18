@@ -26,9 +26,9 @@ class DetailBlock : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail_block, container, false)
 
-        val nombreDetailTextView = view.findViewById<TextView>(R.id.nombreDetail)
-        val descripcionDetailTextView = view.findViewById<TextView>(R.id.descripcionDetail)
-        val imageURLDetailImageView = view.findViewById<ImageView>(R.id.imageURLDetail)
+        val nombreDetailTextView = view.findViewById<TextView>(R.id.nombreBlockDetail)
+        val descripcionDetailTextView = view.findViewById<TextView>(R.id.descripcionBlockDetail)
+        val imageURLDetailImageView = view.findViewById<ImageView>(R.id.imagenDetailBlock)
 
         viewModel.selectedBlock?.let { block ->
             nombreDetailTextView.text = block.nombre
