@@ -9,7 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.mineexplore.Fragments.BlockFragment
 import com.example.mineexplore.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
 class DetailBlock : Fragment() {
@@ -34,6 +36,14 @@ class DetailBlock : Fragment() {
             nombreDetailTextView.text = block.nombre
             descripcionDetailTextView.text = block.descripcion
             Picasso.get().load(block.imageURL).into(imageURLDetailImageView)
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.floatingDetailBlockButton).setOnClickListener{
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, BlockFragment())
+                addToBackStack("replacement")
+                commit()
+            }
         }
 
 

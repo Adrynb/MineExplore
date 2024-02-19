@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mineexplore.Fragments.BlockFragment
+import com.example.mineexplore.Fragments.ItemFragment
 import com.example.mineexplore.Fragments.LobbyFragment
+import com.example.mineexplore.Fragments.MobFragment
 import com.example.mineexplore.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        
 
         binding.imageViewMineExplore.setOnClickListener {
             if (imageViewClickable) {
@@ -37,10 +40,33 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
+            com.example.mineexplore.R.id.blockMenuItem -> {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, BlockFragment())
+                    addToBackStack("replacement")
+                    commit()
+                }
                 true
             }
+
+            com.example.mineexplore.R.id.itemMenuItem -> {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, ItemFragment())
+                    addToBackStack("replacement")
+                    commit()
+                }
+                true
+            }
+
+            com.example.mineexplore.R.id.mobMenuItem -> {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, MobFragment())
+                    addToBackStack("replacement")
+                    commit()
+                }
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

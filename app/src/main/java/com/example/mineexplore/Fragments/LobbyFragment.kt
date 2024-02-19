@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.mineexplore.MainActivity
 import com.example.mineexplore.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class LobbyFragment : Fragment() {
@@ -54,7 +55,14 @@ class LobbyFragment : Fragment() {
                 addToBackStack("replacement")
                 commit()
             }
-        }
+
+       // view.findViewById<FloatingActionButton>(R.id.floatingLobbyButton).setOnClickListener{
+         //   parentFragmentManager.beginTransaction().apply {
+           //     replace(R.id.fragment_container, )
+            }
+        //}
+
+        //}
 
         return view
     }

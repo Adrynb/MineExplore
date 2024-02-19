@@ -9,8 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.mineexplore.Fragments.BlockFragment
+import com.example.mineexplore.Fragments.MobFragment
 import com.example.mineexplore.R
 import com.example.mineexplore.ViewModels.MobViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
 class DetailMob : Fragment() {
@@ -40,6 +43,14 @@ class DetailMob : Fragment() {
             Picasso.get().load(mob.imageURL).into(imagenMobDetail)
 
 
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.floatingDetailMobButton).setOnClickListener{
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, MobFragment())
+                addToBackStack("replacement")
+                commit()
+            }
         }
 
         val editButton : Button = view.findViewById<Button?>(R.id.editarListaMob)

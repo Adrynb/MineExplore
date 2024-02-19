@@ -14,6 +14,7 @@ import com.example.mineexplore.DetailsFragments.DetailItem
 import com.example.mineexplore.MainActivity
 import com.example.mineexplore.R
 import com.example.mineexplore.ViewModels.ItemViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class ItemFragment : Fragment() {
@@ -47,6 +48,14 @@ class ItemFragment : Fragment() {
         }
 
         recyclerView.adapter = adapter
+
+        view.findViewById<FloatingActionButton>(R.id.floatingItemButton).setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, LobbyFragment())
+                addToBackStack("replacement")
+                commit()
+            }
+        }
 
         return view
     }

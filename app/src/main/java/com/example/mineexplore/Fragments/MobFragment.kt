@@ -17,6 +17,7 @@ import com.example.mineexplore.MainActivity
 
 import com.example.mineexplore.R
 import com.example.mineexplore.ViewModels.MobViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MobFragment : Fragment() {
@@ -50,6 +51,16 @@ class MobFragment : Fragment() {
         }
 
         recyclerView.adapter = adapter
+
+        view.findViewById<FloatingActionButton>(R.id.floatingMobButton).setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, LobbyFragment())
+                addToBackStack("replacement")
+                commit()
+            }
+        }
+
+
         return view
 
     }

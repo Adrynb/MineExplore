@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mineexplore.DetailsFragments.DetailBlock
 import com.example.mineexplore.MainActivity
 import com.example.mineexplore.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class BlockFragment : Fragment() {
 
@@ -44,6 +46,13 @@ class BlockFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
+        view.findViewById<FloatingActionButton>(R.id.floatingBlockButton).setOnClickListener{
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, LobbyFragment())
+                addToBackStack("replacement")
+                commit()
+            }
+        }
         return view
     }
 
