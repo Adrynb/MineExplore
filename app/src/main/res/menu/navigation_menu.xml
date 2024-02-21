@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_header"
+        android:title=""
+        android:actionLayout="@layout/nav_header_layout" />
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_change_photo"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Cambiar foto" />
+        <item
+            android:id="@+id/menu_copyright"
+            android:icon="@android:drawable/stat_sys_warning"
+            android:title="Copyright" />
+        <item
+            android:id="@+id/menu_aboutme"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Sobre mí" />
+    </group>
+</menu>

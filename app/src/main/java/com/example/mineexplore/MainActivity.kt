@@ -1,9 +1,13 @@
 package com.example.mineexplore
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.commit
 import com.example.mineexplore.Fragments.BlockFragment
 import com.example.mineexplore.Fragments.ItemFragment
 import com.example.mineexplore.Fragments.LobbyFragment
@@ -14,27 +18,23 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var imageViewClickable = true
-    private lateinit var itemFragment : ItemFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
 
-        
+        setSupportActionBar(binding.toolbar)
 
         binding.imageViewMineExplore.setOnClickListener {
             if (imageViewClickable) {
-                supportFragmentManager.beginTransaction().apply {
+                supportFragmentManager.commit {
                     replace(R.id.fragment_container, LobbyFragment())
                     addToBackStack("replacement")
-                    commit()
                 }
             }
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menuprincipal, menu)
         return true
@@ -42,29 +42,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            com.example.mineexplore.R.id.blockMenuItem -> {
-                supportFragmentManager.beginTransaction().apply {
+            R.id.blockMenuItem -> {
+                supportFragmentManager.commit {
                     replace(R.id.fragment_container, BlockFragment())
                     addToBackStack("replacement")
-                    commit()
                 }
                 true
             }
 
-            com.example.mineexplore.R.id.itemMenuItem -> {
-                supportFragmentManager.beginTransaction().apply {
+            R.id.itemMenuItem -> {
+                supportFragmentManager.commit {
                     replace(R.id.fragment_container, ItemFragment())
                     addToBackStack("replacement")
-                    commit()
                 }
                 true
             }
 
-            com.example.mineexplore.R.id.mobMenuItem -> {
-                supportFragmentManager.beginTransaction().apply {
+            R.id.mobMenuItem -> {
+                supportFragmentManager.commit {
                     replace(R.id.fragment_container, MobFragment())
                     addToBackStack("replacement")
-                    commit()
                 }
                 true
             }
@@ -73,6 +70,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
+
     fun disableImageViewClick() {
         imageViewClickable = false
     }
@@ -80,5 +80,4 @@ class MainActivity : AppCompatActivity() {
     fun enableImageViewClick() {
         imageViewClickable = true
     }
-
 }
