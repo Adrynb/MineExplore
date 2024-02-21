@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mineexplore.Block
 import com.example.mineexplore.DetailsFragments.DetailItem
+import com.example.mineexplore.Items
 import com.example.mineexplore.MainActivity
 import com.example.mineexplore.R
 import com.example.mineexplore.ViewModels.ItemViewModel
@@ -20,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ItemFragment : Fragment() {
 
     private val viewModel: ItemViewModel by activityViewModels()
+    private lateinit var itemAdapter : ItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +61,20 @@ class ItemFragment : Fragment() {
             }
         }
 
+        val addBlock: FloatingActionButton = view.findViewById(R.id.floatingAddItem)
+        addBlock.setOnClickListener {
+            val addFragment = AddFragment.newInstance("itemList")
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, addFragment)
+                addToBackStack("replacement")
+                commit()
+            }
+        }
+
         return view
     }
+
+
 
     companion object {
         @JvmStatic

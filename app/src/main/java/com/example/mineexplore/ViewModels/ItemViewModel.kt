@@ -19,6 +19,7 @@ class ItemViewModel : ViewModel() {
                 "Espada",
                 "https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/44/Diamond_Sword_JE3_BE3.png",
                 "Una poderosa espada que puede cortar a través de los enemigos con facilidad"
+
             )
         )
 

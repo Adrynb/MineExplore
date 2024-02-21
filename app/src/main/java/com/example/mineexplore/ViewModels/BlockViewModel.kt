@@ -27,6 +27,7 @@ class BlockViewModel : ViewModel() {
                 "Madera",
                 "https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c1/Oak_Planks.png",
                 "Este bloque aparece en los bosques. Tiene un color marrón, grueso y tonalidades amarillas"
+
             )
         )
     }

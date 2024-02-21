@@ -3,6 +3,7 @@ package com.example.mineexplore.Fragments
 import BlockAdapter
 import BlockViewModel
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,18 @@ class BlockFragment : Fragment() {
                 commit()
             }
         }
+
+        val addBlock: FloatingActionButton = view.findViewById(R.id.floatingAddBlock)
+        addBlock.setOnClickListener {
+            Log.d("BlockFragment", "Abriendo AddFragment...")
+            val addFragment = AddFragment.newInstance("blockList")
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, addFragment)
+                addToBackStack("replacement")
+                commit()
+            }
+        }
+
         return view
     }
 

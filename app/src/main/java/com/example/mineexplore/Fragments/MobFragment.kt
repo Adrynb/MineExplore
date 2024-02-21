@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -55,6 +56,16 @@ class MobFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.floatingMobButton).setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, LobbyFragment())
+                addToBackStack("replacement")
+                commit()
+            }
+        }
+
+        val addMob: FloatingActionButton = view.findViewById(R.id.floatingAddMob)
+        addMob.setOnClickListener {
+            val addFragment = AddFragment.newInstance("mobList")
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container, addFragment)
                 addToBackStack("replacement")
                 commit()
             }

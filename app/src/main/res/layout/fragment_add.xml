@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/addimagenfragment"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -13,27 +14,33 @@
         android:layout_height="wrap_content"
         android:hint="Nombre" />
 
-    <Button
-        android:id="@+id/buttonUploadImage"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/imageURLAdd"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Subir Imagen" />
+        android:ems="10"
+        android:inputType="text"
+        android:text="URL" />
 
     <ImageView
         android:id="@+id/imagePreview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:adjustViewBounds="true"
         android:visibility="gone" />
-
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripción"
-        android:minLines="4"
+        android:layout_marginTop="16dp"
         android:gravity="top"
-        android:layout_marginTop="16dp" />
+        android:hint="Descripción"
+        android:minLines="4" />
 
+    <Button
+        android:id="@+id/saveAll"
+        android:layout_width="191dp"
+        android:layout_height="wrap_content"
+        android:text="GUARDAR" />
 </LinearLayout>

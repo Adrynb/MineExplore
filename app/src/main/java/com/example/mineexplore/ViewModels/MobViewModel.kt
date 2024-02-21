@@ -21,6 +21,7 @@ class MobViewModel : ViewModel() {
                 "Zombie",
                 "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/87/Zombie_JE3_BE2.png",
                 "Un enemigo no muerto que vaga por la noche en busca de jugadores"
+
             )
         )
 
@@ -29,6 +30,7 @@ class MobViewModel : ViewModel() {
                 "Creeper",
                 "https://static.wikia.nocookie.net/minecraft_es_gamepedia/images/b/b2/Creeper1.png/revision/latest?cb=20210923172737",
                 "Una criatura explosiva que se acerca sigilosamente para explotar"
+
             )
         )
     }
