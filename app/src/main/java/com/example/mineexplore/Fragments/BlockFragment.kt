@@ -11,6 +11,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mineexplore.DetailsFragments.DetailBlock
@@ -36,16 +37,21 @@ class BlockFragment : Fragment() {
 
         val adapter = BlockAdapter(viewModel)
 
-
         adapter.click = { position, block ->
-            viewModel.selectedBlock = block
-            parentFragmentManager.commit {
-                replace(R.id.fragment_container, DetailBlock.newInstance())
-                addToBackStack("replacement")
-            }
+            viewModel.setSelectedBlock(block)
         }
 
         recyclerView.adapter = adapter
+
+        viewModel.selectedBlockLiveData.observe(viewLifecycleOwner, Observer { block ->
+            block?.let {
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, DetailBlock())
+                    addToBackStack("replacement")
+                    commit()
+                }
+            }
+        })
 
         view.findViewById<FloatingActionButton>(R.id.floatingBlockButton).setOnClickListener{
             parentFragmentManager.beginTransaction().apply {

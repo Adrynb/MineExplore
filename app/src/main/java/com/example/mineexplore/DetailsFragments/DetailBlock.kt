@@ -1,5 +1,8 @@
 package com.example.mineexplore.DetailsFragments
+
 import BlockViewModel
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +19,7 @@ import com.squareup.picasso.Picasso
 
 class DetailBlock : Fragment() {
 
-    companion object {
-        fun newInstance() = DetailBlock()
-    }
-
-    private val viewModel: BlockViewModel by activityViewModels()
+    private lateinit var viewModel: BlockViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,13 +31,17 @@ class DetailBlock : Fragment() {
         val descripcionDetailTextView = view.findViewById<TextView>(R.id.descripcionBlockDetail)
         val imageURLDetailImageView = view.findViewById<ImageView>(R.id.imagenDetailBlock)
 
-        viewModel.selectedBlock?.let { block ->
-            nombreDetailTextView.text = block.nombre
-            descripcionDetailTextView.text = block.descripcion
-            Picasso.get().load(block.imageURL).into(imageURLDetailImageView)
-        }
+        viewModel = ViewModelProvider(requireActivity()).get(BlockViewModel::class.java)
 
-        view.findViewById<FloatingActionButton>(R.id.floatingDetailBlockButton).setOnClickListener{
+        viewModel.selectedBlockLiveData.observe(viewLifecycleOwner, Observer { block ->
+            block?.let {
+                nombreDetailTextView.text = it.nombre
+                descripcionDetailTextView.text = it.descripcion
+                Picasso.get().load(it.imageURL).into(imageURLDetailImageView)
+            }
+        })
+
+        view.findViewById<FloatingActionButton>(R.id.floatingDetailBlockButton).setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, BlockFragment())
                 addToBackStack("replacement")
@@ -46,14 +49,19 @@ class DetailBlock : Fragment() {
             }
         }
 
-
-        val editButton : Button = view.findViewById<Button?>(R.id.editarLista)
-        editButton.setOnClickListener{
+        val editButton: Button = view.findViewById<Button?>(R.id.editarLista)
+        editButton.setOnClickListener {
 
         }
 
-
-
         return view
+    }
+
+    companion object {
+        fun newInstance() {
+            apply {
+
+            }
+        }
     }
 }

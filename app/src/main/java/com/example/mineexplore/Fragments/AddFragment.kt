@@ -28,54 +28,37 @@ import com.example.mineexplore.ViewModels.MobViewModel
 
 class AddFragment : Fragment() {
 
-    private val IMAGE_PICK_CODE = 1000
-    private val PERMISSION_CODE = 1001
     private val blockViewModel : BlockViewModel by activityViewModels()
     private val mobViewModel : MobViewModel by activityViewModels()
     private val itemViewModel : ItemViewModel by activityViewModels()
-    private lateinit var blockAdapter : BlockAdapter
-    private lateinit var itemAdapter: ItemAdapter
     private lateinit var saveButton : Button
-    private lateinit var selectedImageUri: Uri
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_add, container, false)
-
         val sourceList = arguments?.getString(ARG_SOURCE_LIST)
 
-
-
-        when(sourceList){
-
+        when(sourceList) {
             "blockList" -> {
-
                 val newName: EditText = view.findViewById(R.id.editTextName)
                 val newURL : EditText = view.findViewById(R.id.imageURLAdd)
                 val newDescription: EditText = view.findViewById(R.id.editTextDescription)
-
                 saveButton = view.findViewById(R.id.saveAll)
                 saveButton.setOnClickListener {
-
                     val newBlock = Block(
                         newName.text.toString(),
                         newURL.text.toString(),
                         newDescription.text.toString()
                     )
                     blockViewModel.addBlock(newBlock)
-                    fragmentManager?.popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
-
-                }
-
-
+            }
 
             "mobList" -> {
                 val newName: EditText = view.findViewById(R.id.editTextName)
