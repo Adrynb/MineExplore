@@ -15,19 +15,16 @@ class BlockAdapter(private val viewModel: BlockViewModel) :
     var click: ((Int, Block) -> Unit)? = null
 
     inner class ViewHolder(private val binding: FragmentContentBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
         val nameTextView: TextView = binding.content
         val imageView: ImageView = binding.preImageView
         val seeButton: Button = binding.seeButton
 
         init {
             seeButton.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    viewModel.setSelectedBlock(viewModel.blocksLiveData.value?.get(position))
-                }
+                click?.invoke(adapterPosition, viewModel.blocks[adapterPosition])
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,18 +33,11 @@ class BlockAdapter(private val viewModel: BlockViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val block = viewModel.blocksLiveData.value?.get(position)
-        block?.let {
-            holder.nameTextView.text = it.nombre
-            Picasso.get().load(it.imageURL).into(holder.imageView)
-        }
+        val item = viewModel.blocks[position]
+        holder.nameTextView.text = item.nombre
+        Picasso.get().load(item.imageURL).into(holder.imageView)
     }
 
-    override fun getItemCount(): Int {
-        return viewModel.blocksLiveData.value?.size ?: 0
-    }
 
-    init {
-        viewModel.blocksLiveData.observeForever { notifyDataSetChanged() }
-    }
+    override fun getItemCount(): Int = viewModel.blocks.size
 }

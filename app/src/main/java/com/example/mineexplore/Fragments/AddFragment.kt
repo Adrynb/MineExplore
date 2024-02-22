@@ -24,6 +24,7 @@ import com.example.mineexplore.Mob
 import com.example.mineexplore.R
 import com.example.mineexplore.ViewModels.ItemViewModel
 import com.example.mineexplore.ViewModels.MobViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class AddFragment : Fragment() {
@@ -100,6 +101,13 @@ class AddFragment : Fragment() {
             }
 
         }
+
+        var backButton : FloatingActionButton = view.findViewById(R.id.floatingBackButton)
+        backButton.setOnClickListener{
+            parentFragmentManager.popBackStack()
+        }
+
+
 
         return view
 

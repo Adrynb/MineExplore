@@ -2,6 +2,7 @@ package com.example.mineexplore.Fragments
 
 import BlockAdapter
 import BlockViewModel
+import DetailBlock
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mineexplore.DetailsFragments.DetailBlock
+import com.example.mineexplore.DetailsFragments.DetailItem
 import com.example.mineexplore.MainActivity
 import com.example.mineexplore.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,21 +38,18 @@ class BlockFragment : Fragment() {
 
         val adapter = BlockAdapter(viewModel)
 
-        adapter.click = { position, block ->
-            viewModel.setSelectedBlock(block)
+        adapter.click = {position, item ->
+            viewModel.selectedBlock = item
+            parentFragmentManager.commit{
+                replace(R.id.fragment_container, DetailBlock())
+                addToBackStack("replacement")
+            }
         }
 
         recyclerView.adapter = adapter
 
-        viewModel.selectedBlockLiveData.observe(viewLifecycleOwner, Observer { block ->
-            block?.let {
-                parentFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragment_container, DetailBlock())
-                    addToBackStack("replacement")
-                    commit()
-                }
-            }
-        })
+
+
 
         view.findViewById<FloatingActionButton>(R.id.floatingBlockButton).setOnClickListener{
             parentFragmentManager.beginTransaction().apply {
@@ -63,7 +61,6 @@ class BlockFragment : Fragment() {
 
         val addBlock: FloatingActionButton = view.findViewById(R.id.floatingAddBlock)
         addBlock.setOnClickListener {
-            Log.d("BlockFragment", "Abriendo AddFragment...")
             val addFragment = AddFragment.newInstance("blockList")
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, addFragment)

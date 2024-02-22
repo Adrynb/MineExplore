@@ -1,14 +1,31 @@
 package com.example.mineexplore
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewTreeObserver
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
 import com.example.mineexplore.Fragments.BlockFragment
 import com.example.mineexplore.Fragments.ItemFragment
@@ -24,21 +41,39 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var requestCamera: ActivityResultLauncher<Void?>
+    val REQUEST_IMAGE_CAPTURE = 1001
+    private lateinit var headerImageView: ImageView
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navView
         setSupportActionBar(binding.toolbar)
+        val headerView = navigationView.getHeaderView(0)
+        headerImageView = headerView.findViewById(R.id.headerImage)
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        navigationView.setNavigationItemSelectedListener(this)
+
+
+        actionBarDrawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            binding.toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
-        navigationView.setNavigationItemSelectedListener(this)
+
+        requestConfigs()
 
         binding.imageViewMineExplore.setOnClickListener {
             if (imageViewClickable) {
@@ -48,9 +83,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menuprincipal, menu)
         return true
     }
@@ -64,6 +101,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 true
             }
+
             R.id.itemMenuItem -> {
                 supportFragmentManager.commit {
                     replace(R.id.fragment_container, ItemFragment())
@@ -71,6 +109,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 true
             }
+
             R.id.mobMenuItem -> {
                 supportFragmentManager.commit {
                     replace(R.id.fragment_container, MobFragment())
@@ -78,27 +117,106 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-
             R.id.menu_change_photo -> {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        android.Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(android.Manifest.permission.CAMERA),
+                        REQUEST_IMAGE_CAPTURE
+                    )
+                } else {
+                    openCamera()
+                }
 
-            }
-            R.id.menu_aboutme -> {
-
+                return true
             }
             R.id.menu_copyright -> {
-
+                showCopyrightDialog()
+                return true
             }
-
+            R.id.menu_aboutme -> {
+                showAboutMeDialog()
+                return true
+            }
+            else -> return false
         }
+    }
 
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
+    private fun showAboutMeDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle("Acerca de Mí")
+        dialogBuilder.setMessage("¡Hola! Soy Adrián y esta es mi aplicación de minexplore. Cumple los requisitos minimos para aprobar (o eso creo), gracias.")
+        dialogBuilder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
+    private fun showCopyrightDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle("Derechos de Autor")
+        dialogBuilder.setMessage(" © 2024 Adrián Navarro Buceta. Todos los derechos robados para un buen uso.")
+        dialogBuilder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
+
+    private fun openCamera() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            requestCamera.launch(null)
+        } else {
+            requestPermissionLauncher.launch(arrayOf(Manifest.permission.CAMERA))
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                Toast.makeText(
+                    this,
+                    "El permiso para acceder a la camara es denegado",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+
+    fun requestConfigs(){
+
+        requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { }
+
+        requestCamera = registerForActivityResult(
+            ActivityResultContracts.TakePicturePreview()
+        ) {
+            it?.let { bitmap ->
+                headerImageView.setImageBitmap(bitmap)
+            }
+        }
     }
 
     fun disableImageViewClick() {
@@ -108,4 +226,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun enableImageViewClick() {
         imageViewClickable = true
     }
+
+
+
+
 }

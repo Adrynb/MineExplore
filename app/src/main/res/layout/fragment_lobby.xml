@@ -27,12 +27,4 @@
         android:layout_height="wrap_content"
         android:text="Información sobre Bloques" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingLobbyButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_revert" />
-
 </LinearLayout>

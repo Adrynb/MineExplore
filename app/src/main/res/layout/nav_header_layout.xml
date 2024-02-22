@@ -10,18 +10,11 @@
     android:padding="16dp">
 
     <ImageView
+        android:id="@+id/headerImage"
         android:layout_width="74dp"
         android:layout_height="63dp"
         android:contentDescription="Header Image"
         app:srcCompat="@android:drawable/btn_star_big_on"
         tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
 
 </LinearLayout>

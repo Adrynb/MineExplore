@@ -1,15 +1,17 @@
 import androidx.lifecycle.ViewModel
 import com.example.mineexplore.Block
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 class BlockViewModel : ViewModel() {
 
     private var blockList: MutableList<Block> = mutableListOf()
-    private val _blocksLiveData = MutableLiveData<List<Block>>()
-    private val _selectedBlockLiveData = MutableLiveData<Block?>()
+    private var _selectedBlock: Block? = null
 
-    val blocksLiveData: LiveData<List<Block>> = _blocksLiveData
-    val selectedBlockLiveData: LiveData<Block?> = _selectedBlockLiveData
+    val blocks: List<Block>
+        get() = blockList.toList()
+
+    var selectedBlock: Block?
+        get() = _selectedBlock
+        set(value) { _selectedBlock = value }
 
     init {
         blockList.add(
@@ -27,17 +29,10 @@ class BlockViewModel : ViewModel() {
                 "Este bloque aparece en los bosques. Tiene un color marrón, grueso y tonalidades amarillas"
             )
         )
-
-        _blocksLiveData.value = blockList.toList()
     }
 
     fun addBlock(block: Block) {
         blockList.add(block)
-        _blocksLiveData.value = blockList.toList()
-    }
-
-    fun setSelectedBlock(block: Block?) {
-        _selectedBlockLiveData.value = block
     }
 
 }

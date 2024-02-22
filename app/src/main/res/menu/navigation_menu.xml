@@ -4,8 +4,7 @@
 
     <item
         android:id="@+id/nav_header"
-        android:title=""
-        android:actionLayout="@layout/nav_header_layout" />
+        android:title="" />
 
     <group android:checkableBehavior="single">
         <item
