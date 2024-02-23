@@ -3,6 +3,7 @@ package com.example.mineexplore.Fragments
 import BlockAdapter
 import BlockViewModel
 import ItemAdapter
+import MobViewModel
 
 import android.net.Uri
 import android.os.Bundle
@@ -23,7 +24,6 @@ import com.example.mineexplore.Mob
 
 import com.example.mineexplore.R
 import com.example.mineexplore.ViewModels.ItemViewModel
-import com.example.mineexplore.ViewModels.MobViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -95,7 +95,7 @@ class AddFragment : Fragment() {
                     itemViewModel.addItem(newItem)
 
 
-                    fragmentManager?.popBackStack()
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
 
             }
@@ -104,7 +104,7 @@ class AddFragment : Fragment() {
 
         var backButton : FloatingActionButton = view.findViewById(R.id.floatingBackButton)
         backButton.setOnClickListener{
-            parentFragmentManager.popBackStack()
+           requireActivity().supportFragmentManager.popBackStack()
         }
 
 

@@ -1,5 +1,6 @@
 package com.example.mineexplore
 
+import MobViewModel
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import com.example.mineexplore.Fragments.BlockFragment
 import com.example.mineexplore.Fragments.ItemFragment
 import com.example.mineexplore.Fragments.LobbyFragment
@@ -45,6 +48,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val REQUEST_IMAGE_CAPTURE = 1001
     private lateinit var headerImageView: ImageView
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
+    private val  mobViewModel : MobViewModel by viewModels()
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +58,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navView
@@ -79,11 +87,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (imageViewClickable) {
                 supportFragmentManager.commit {
                     replace(R.id.fragment_container, LobbyFragment())
-                    addToBackStack("replacement")
                 }
             }
         }
-
+        this.mobViewModel.initialize(this)
     }
 
 
@@ -97,7 +104,6 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
             R.id.blockMenuItem -> {
                 supportFragmentManager.commit {
                     replace(R.id.fragment_container, BlockFragment())
-                    addToBackStack("replacement")
                 }
                 true
             }
@@ -105,15 +111,14 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
             R.id.itemMenuItem -> {
                 supportFragmentManager.commit {
                     replace(R.id.fragment_container, ItemFragment())
-                    addToBackStack("replacement")
                 }
                 true
             }
 
             R.id.mobMenuItem -> {
-                supportFragmentManager.commit {
-                    replace(R.id.fragment_container, MobFragment())
-                    addToBackStack("replacement")
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, MobFragment.newInstance())
+                    commit()
                 }
                 true
             }
@@ -121,6 +126,7 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

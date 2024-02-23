@@ -1,41 +1,49 @@
-package com.example.mineexplore.ViewModels
-
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mineexplore.DAO.MobRepository
 import com.example.mineexplore.Mob
 
 class MobViewModel : ViewModel() {
+    private lateinit var _context: Context
+    private var _mobList: MutableLiveData<List<Mob>> = MutableLiveData()
+    lateinit var mobRepository: MobRepository
+    val mobs: LiveData<List<Mob>> get() = _mobList
 
-    private var mobList: MutableList<Mob> = mutableListOf()
-    private var _selectedMob: Mob? = null
+    private val _selectedMob: MutableLiveData<Mob?> = MutableLiveData()
+    val selectedMob: LiveData<Mob?> get() = _selectedMob
 
-    val mobs: List<Mob>
-        get() = mobList.toList()
 
-    var selectedMob: Mob?
-        get() = _selectedMob
-        set(value) { _selectedMob = value }
-
-    init {
-        mobList.add(
-            Mob(
-                "Zombie",
-                "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/87/Zombie_JE3_BE2.png",
-                "Un enemigo no muerto que vaga por la noche en busca de jugadores"
-
-            )
-        )
-
-        mobList.add(
-            Mob(
-                "Creeper",
-                "https://static.wikia.nocookie.net/minecraft_es_gamepedia/images/b/b2/Creeper1.png/revision/latest?cb=20210923172737",
-                "Una criatura explosiva que se acerca sigilosamente para explotar"
-
-            )
-        )
+    fun initialize(c: Context){
+        this._context = c
+        this.mobRepository = MobRepository(c)
+        _mobList = MutableLiveData()
+        this._mobList.value = this.mobRepository.getAllMobs()
     }
+
 
     fun addMob(mob: Mob) {
-        mobList.add(mob)
+        val insertedId = mobRepository.insert(mob)
+        val currentList = _mobList.value?.toMutableList() ?: mutableListOf()
+        currentList.add(mob)
+        _mobList.value = currentList
     }
+
+    fun deleteMob() {
+        _selectedMob.value?.let { selectedMob ->
+            mobRepository.delete(selectedMob)
+            val currentList = _mobList.value?.toMutableList() ?: mutableListOf()
+            currentList.remove(selectedMob)
+            _mobList.value = currentList
+            _selectedMob.value = null
+        }
+    }
+
+
+    fun setSelectedMob(mob: Mob) {
+        _selectedMob.value = mob
+    }
+
+
 }

@@ -54,7 +54,6 @@ class BlockFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.floatingBlockButton).setOnClickListener{
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, LobbyFragment())
-                addToBackStack("replacement")
                 commit()
             }
         }
@@ -64,7 +63,6 @@ class BlockFragment : Fragment() {
             val addFragment = AddFragment.newInstance("blockList")
             parentFragmentManager.beginTransaction().apply {
                 replace(R.id.fragment_container, addFragment)
-                addToBackStack("replacement")
                 commit()
             }
         }

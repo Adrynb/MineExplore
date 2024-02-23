@@ -41,16 +41,16 @@ class DetailItem : Fragment(){
         }
 
         view.findViewById<FloatingActionButton>(R.id.floatingDetailItemButton).setOnClickListener{
-            parentFragmentManager.beginTransaction().apply {
-                replace(R.id.fragment_container, ItemFragment())
-                addToBackStack("replacement")
-                commit()
-            }
+            requireActivity().supportFragmentManager.popBackStack()
         }
+
 
         val editButton : Button = view.findViewById(R.id.editarListaItem)
         editButton.setOnClickListener{
 
+            viewModel.selectedItem?.let {
+
+            }
         }
 
         return view

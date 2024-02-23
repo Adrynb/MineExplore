@@ -34,35 +34,26 @@ class LobbyFragment : Fragment() {
         (requireActivity() as MainActivity).disableImageViewClick()
 
         buttonItem.setOnClickListener {
-            fragmentManager?.beginTransaction()?.apply {
+            parentFragmentManager.beginTransaction()?.apply {
                 replace(R.id.fragment_container, ItemFragment())
-                addToBackStack("replacement")
                 commit()
             }
         }
 
         buttonBlock.setOnClickListener {
-            fragmentManager?.beginTransaction()?.apply {
+            parentFragmentManager.beginTransaction()?.apply {
                 replace(R.id.fragment_container, BlockFragment())
-                addToBackStack("replacement")
                 commit()
             }
         }
 
         buttonMob.setOnClickListener {
-            fragmentManager?.beginTransaction()?.apply {
-                replace(R.id.fragment_container, MobFragment())
-                addToBackStack("replacement")
+            parentFragmentManager.beginTransaction()?.apply {
+                replace(R.id.fragment_container, MobFragment.newInstance())
                 commit()
             }
+        }
 
-       // view.findViewById<FloatingActionButton>(R.id.floatingLobbyButton).setOnClickListener{
-         //   parentFragmentManager.beginTransaction().apply {
-           //     replace(R.id.fragment_container, )
-            }
-        //}
-
-        //}
 
         return view
     }

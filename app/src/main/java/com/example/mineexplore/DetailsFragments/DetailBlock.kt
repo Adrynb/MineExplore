@@ -36,7 +36,7 @@ class DetailBlock : Fragment() {
 
 
         view.findViewById<FloatingActionButton>(R.id.floatingDetailBlock).setOnClickListener {
-            parentFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
 

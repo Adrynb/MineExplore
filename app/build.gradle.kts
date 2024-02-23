@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
+    id("com.google.devtools.ksp")
 
 }
 
@@ -44,6 +44,8 @@ android {
 
 dependencies {
     // AndroidX y Material Design
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -61,7 +63,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
 
     // Room Database
-    implementation("androidx.room:room-runtime:2.4.0")
+    implementation("androidx.room:room-runtime:2.5.0")
+    annotationProcessor("androidx.room:room-compiler:2.5.0")
+    ksp("androidx.room:room-compiler:2.5.0")
+
+
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.2.1")
