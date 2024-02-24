@@ -9,10 +9,12 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mineexplore.Block
 import com.example.mineexplore.DetailsFragments.DetailItem
+import com.example.mineexplore.DetailsFragments.DetailMob
 import com.example.mineexplore.Items
 import com.example.mineexplore.MainActivity
 import com.example.mineexplore.R
@@ -43,15 +45,22 @@ class ItemFragment : Fragment() {
 
         val adapter = ItemAdapter(viewModel)
 
-        adapter.click = {position, item ->
-            viewModel.selectedItem = item
-            parentFragmentManager.commit{
-                replace(R.id.fragment_container, DetailItem.newInstance())
-                addToBackStack("replacement")
-            }
+        adapter.click = { position, item ->
+            viewModel.setSelectedItem(item)
         }
 
         recyclerView.adapter = adapter
+
+        viewModel.selectedItem.observe(viewLifecycleOwner, Observer { selectedItem ->
+            selectedItem?.let {
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, DetailMob.newInstance())
+                    commit()
+                }
+            }
+        })
+
+
 
         view.findViewById<FloatingActionButton>(R.id.floatingItemButton).setOnClickListener {
             parentFragmentManager.beginTransaction().apply {

@@ -21,7 +21,13 @@ class BlockAdapter(private val viewModel: BlockViewModel) :
 
         init {
             seeButton.setOnClickListener {
-                click?.invoke(adapterPosition, viewModel.blocks[adapterPosition])
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION){
+                    val mob = viewModel.blocks.value?.get(position)
+                    mob?.let {clickedBlock ->
+                        click?.invoke(position, clickedBlock)
+                    }
+                }
             }
         }
 
@@ -33,11 +39,15 @@ class BlockAdapter(private val viewModel: BlockViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = viewModel.blocks[position]
-        holder.nameTextView.text = item.nombre
-        Picasso.get().load(item.imageURL).into(holder.imageView)
+        viewModel.blocks.value?.get(position)?.let {block ->
+            holder.nameTextView.text = block.nombre
+            Picasso.get().load(block.imageURL).into(holder.imageView)
+        }
+
     }
 
 
-    override fun getItemCount(): Int = viewModel.blocks.size
+    override fun getItemCount(): Int {
+        return viewModel.blocks.value?.size ?: 0
+    }
 }

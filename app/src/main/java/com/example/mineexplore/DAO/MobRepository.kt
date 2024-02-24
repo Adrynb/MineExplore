@@ -22,9 +22,6 @@ class MobRepository(var context : Context) {
         this._mobDao.delete(mob)
     }
 
-    fun update(mob : Mob){
-        this._mobDao.update(mob)
-    }
 
     fun getAllMobs() : MutableList<Mob> {
         return _mobDao.getAllMobs().toMutableList()

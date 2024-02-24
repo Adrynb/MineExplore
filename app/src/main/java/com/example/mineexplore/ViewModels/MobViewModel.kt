@@ -24,7 +24,7 @@ class MobViewModel : ViewModel() {
 
 
     fun addMob(mob: Mob) {
-        val insertedId = mobRepository.insert(mob)
+        mobRepository.insert(mob)
         val currentList = _mobList.value?.toMutableList() ?: mutableListOf()
         currentList.add(mob)
         _mobList.value = currentList

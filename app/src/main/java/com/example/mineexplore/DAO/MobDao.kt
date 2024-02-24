@@ -16,8 +16,6 @@ interface MobDao {
     @Delete
     fun delete(mob : Mob)
 
-    @Update
-    fun update(mob : Mob)
 
     @Query("SELECT * FROM mob")
     fun getAllMobs() : List<Mob>

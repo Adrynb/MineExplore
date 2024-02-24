@@ -1,5 +1,6 @@
 package com.example.mineexplore
 
+import BlockViewModel
 import MobViewModel
 import android.Manifest
 import android.app.Activity
@@ -34,6 +35,7 @@ import com.example.mineexplore.Fragments.BlockFragment
 import com.example.mineexplore.Fragments.ItemFragment
 import com.example.mineexplore.Fragments.LobbyFragment
 import com.example.mineexplore.Fragments.MobFragment
+import com.example.mineexplore.ViewModels.ItemViewModel
 import com.example.mineexplore.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var headerImageView: ImageView
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
     private val  mobViewModel : MobViewModel by viewModels()
+    private val blockViewModel : BlockViewModel by viewModels()
+    private val itemViewModel : ItemViewModel by viewModels()
 
 
 
@@ -58,8 +62,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
         drawerLayout = binding.drawerLayout
         navigationView = binding.navView
@@ -90,7 +92,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
+
         this.mobViewModel.initialize(this)
+        this.blockViewModel.initialize(this)
+        this.itemViewModel.initialize(this)
     }
 
 

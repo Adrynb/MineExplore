@@ -38,17 +38,19 @@ class BlockFragment : Fragment() {
 
         val adapter = BlockAdapter(viewModel)
 
-        adapter.click = {position, item ->
-            viewModel.selectedBlock = item
-            parentFragmentManager.commit{
-                replace(R.id.fragment_container, DetailBlock())
-                addToBackStack("replacement")
-            }
+        adapter.click = {position, block ->
+            viewModel.setSelectedBlock(block)
         }
 
-        recyclerView.adapter = adapter
+        viewModel.selectedBlock.observe(viewLifecycleOwner, Observer {selectedBlock ->
+            selectedBlock?.let {
+                parentFragmentManager.beginTransaction().apply {
+                    replace(R.id.fragment_container, DetailBlock())
+                    commit()
+                }
+            }
 
-
+        })
 
 
         view.findViewById<FloatingActionButton>(R.id.floatingBlockButton).setOnClickListener{
@@ -67,6 +69,8 @@ class BlockFragment : Fragment() {
             }
         }
 
+
+        recyclerView.adapter = adapter
         return view
     }
 

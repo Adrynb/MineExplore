@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -28,15 +29,20 @@ class DetailBlock : Fragment() {
         val descripcionDetailTextView = view.findViewById<TextView>(R.id.descripcionBlockDetail)
         val imageURLDetailImageView = view.findViewById<ImageView>(R.id.imagenDetailBlock)
 
-        viewModel.selectedBlock?.let { block ->
+        viewModel.selectedBlock.observe(viewLifecycleOwner) {
+            block -> block?.let {
             nombreDetailTextView.text = block.nombre
             descripcionDetailTextView.text = block.descripcion
-            Picasso.get().load(block.imageURL).into(imageURLDetailImageView)
+            Picasso.get().load(it.imageURL).into(imageURLDetailImageView)
         }
-
+        }
 
         view.findViewById<FloatingActionButton>(R.id.floatingDetailBlock).setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        view.findViewById<Button?>(R.id.editarLista).setOnClickListener{
+            viewModel.deleteBlock()
         }
 
 

@@ -91,9 +91,12 @@ class AddFragment : Fragment() {
                 saveButton = view.findViewById(R.id.saveAll)
                 saveButton.setOnClickListener {
 
-                    val newItem = Items(newName.text.toString(), newURL.text.toString(), newDescription.text.toString())
-                    itemViewModel.addItem(newItem)
+                    val newItem = Items(newName.text.toString(),
+                        newURL.text.toString(),
+                        newDescription.text.toString())
 
+
+                    itemViewModel.addItem(newItem)
 
                     requireActivity().supportFragmentManager.popBackStack()
                 }
