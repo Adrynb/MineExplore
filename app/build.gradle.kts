@@ -67,11 +67,19 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.5.0")
     ksp("androidx.room:room-compiler:2.5.0")
 
+    //Retrofit
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 
     // Dependencias de prueba
     testImplementation("junit:junit:4.13.2")

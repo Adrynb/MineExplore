@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mineexplore.Mob
+import com.example.mineexplore.R
 import com.example.mineexplore.databinding.FragmentContentBinding
 import com.squareup.picasso.Picasso
 
@@ -47,7 +48,12 @@ class MobAdapter(private val viewModel: MobViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         viewModel.mobs.value?.get(position)?.let { mob ->
             holder.nameTextView.text = mob.nombre
-            Picasso.get().load(mob.imageURL).into(holder.imageView)
+            if(mob.imageURL.isNullOrEmpty()){
+                Picasso.get().load(mob?.imageURL).into(holder.imageView)
+            }
+            else{
+                holder.imageView.setImageResource(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
         }
     }
 

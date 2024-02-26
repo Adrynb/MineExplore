@@ -1,22 +1,17 @@
 package com.example.mineexplore
 
 import BlockViewModel
+import GatoServicio
 import MobViewModel
 import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewTreeObserver
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -24,20 +19,25 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.mineexplore.Fragments.BlockFragment
 import com.example.mineexplore.Fragments.ItemFragment
 import com.example.mineexplore.Fragments.LobbyFragment
 import com.example.mineexplore.Fragments.MobFragment
+import com.example.mineexplore.RetroFit.RetroFit
 import com.example.mineexplore.ViewModels.ItemViewModel
 import com.example.mineexplore.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,8 +53,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val  mobViewModel : MobViewModel by viewModels()
     private val blockViewModel : BlockViewModel by viewModels()
     private val itemViewModel : ItemViewModel by viewModels()
-
-
+    private var musicJob: Job = Job()
+    private lateinit var mediaPlayer : MediaPlayer
+    private var  isMusicPlaying = false
+    private lateinit var gatoServicio : GatoServicio
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +65,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        gatoServicio = RetroFit.instance.create(GatoServicio::class.java)
+
         drawerLayout = binding.drawerLayout
         navigationView = binding.navView
         setSupportActionBar(binding.toolbar)
@@ -70,7 +74,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         headerImageView = headerView.findViewById(R.id.headerImage)
 
         navigationView.setNavigationItemSelectedListener(this)
-
 
         actionBarDrawerToggle = ActionBarDrawerToggle(
             this,
@@ -85,13 +88,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         requestConfigs()
 
-        binding.imageViewMineExplore.setOnClickListener {
+        binding.imageViewMineExplore.setOnClickListener {//Darle click para remplazar fragmento.
             if (imageViewClickable) {
                 supportFragmentManager.commit {
                     replace(R.id.fragment_container, LobbyFragment())
                 }
             }
         }
+        //Inicializar los viewmodels para la base de datos ROOM (pasandole el contexto de la actividad)
 
         this.mobViewModel.initialize(this)
         this.blockViewModel.initialize(this)
@@ -99,32 +103,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menuprincipal, menu)
         return true
     }
 
+    /*
+    Menu de items para cambiar de fragmentos. Cada uno lleva una nueva instancia.
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.blockMenuItem -> {
-                supportFragmentManager.commit {
-                    replace(R.id.fragment_container, BlockFragment())
-                }
+                replaceFragment(BlockFragment())
                 true
             }
 
             R.id.itemMenuItem -> {
-                supportFragmentManager.commit {
-                    replace(R.id.fragment_container, ItemFragment())
-                }
+                replaceFragment(ItemFragment())
                 true
             }
 
             R.id.mobMenuItem -> {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragment_container, MobFragment.newInstance())
-                    commit()
-                }
+                replaceFragment(MobFragment())
                 true
             }
 
@@ -153,21 +153,52 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
                 return true
             }
             R.id.menu_copyright -> {
-                showCopyrightDialog()
+                showDialog("Derechos de Autor", " © 2024 Adrián Navarro Buceta. Todos los derechos robados para un buen uso.")
                 return true
             }
             R.id.menu_aboutme -> {
-                showAboutMeDialog()
+                showDialog("Acerca de Mí", "¡Hola! Soy Adrián y esta es mi aplicación de minexplore. Cumple los requisitos mínimos para aprobar (o eso creo), gracias.")
                 return true
             }
+
+            R.id.menu_musica -> {
+
+                if(isMusicPlaying){
+                    stopMusic()
+                }
+                else{
+                    startMusic()
+                }
+                return true
+            }
+
+            R.id.menu_gato -> {
+                getRandomCatImage()
+                return true
+
+            }
+
             else -> return false
         }
     }
 
-    private fun showAboutMeDialog() {
+
+    /*
+    Funcion que remplaza los fragmentos, a través del fragment_container.
+     */
+    fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, fragment)
+        }
+    }
+
+    /*
+    Función que demuestra un dialogo de texto.
+     */
+    fun showDialog(title: String, message: String) {
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Acerca de Mí")
-        dialogBuilder.setMessage("¡Hola! Soy Adrián y esta es mi aplicación de minexplore. Cumple los requisitos minimos para aprobar (o eso creo), gracias.")
+        dialogBuilder.setTitle(title)
+        dialogBuilder.setMessage(message)
         dialogBuilder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
@@ -175,16 +206,6 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         dialog.show()
     }
 
-    private fun showCopyrightDialog() {
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle("Derechos de Autor")
-        dialogBuilder.setMessage(" © 2024 Adrián Navarro Buceta. Todos los derechos robados para un buen uso.")
-        dialogBuilder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = dialogBuilder.create()
-        dialog.show()
-    }
 
 
     private fun openCamera() {
@@ -230,13 +251,47 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         }
     }
 
+    private fun startMusic() {
+        if (!musicJob.isActive || !isMusicPlaying) {
+            musicJob = CoroutineScope(Dispatchers.Main).launch {
+                mediaPlayer = MediaPlayer.create(this@MainActivity, R.raw.minecraft)
+                mediaPlayer.isLooping = true
+                mediaPlayer.start()
+                isMusicPlaying = true
+            }
+        }
+    }
+    private fun stopMusic() {
+        musicJob.cancel()
+        mediaPlayer.release()
+        isMusicPlaying = false
+    }
+
+    private fun getRandomCatImage() {
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                val imagenesGatos = gatoServicio.getRandomCatImage()
+                if (imagenesGatos.isNotEmpty()) {
+                    val randomCatImage = imagenesGatos.random()
+                    Glide.with(this@MainActivity).load(randomCatImage.url).into(headerImageView)
+                }
+                else{
+                    Log.d("ErrorImage", "La lista esta vacía :c")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun disableImageViewClick() {
-        imageViewClickable = false
+        imageViewClickable = false 
     }
 
     fun enableImageViewClick() {
         imageViewClickable = true
     }
+
 
 
 

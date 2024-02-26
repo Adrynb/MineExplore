@@ -47,13 +47,13 @@ class AddFragment : Fragment() {
         when(sourceList) {
             "blockList" -> {
                 val newName: EditText = view.findViewById(R.id.editTextName)
-                val newURL : EditText = view.findViewById(R.id.imageURLAdd)
+                val newURL : EditText? = view.findViewById(R.id.imageURLAdd)
                 val newDescription: EditText = view.findViewById(R.id.editTextDescription)
                 saveButton = view.findViewById(R.id.saveAll)
                 saveButton.setOnClickListener {
                     val newBlock = Block(
                         newName.text.toString(),
-                        newURL.text.toString(),
+                        newURL?.text.toString(),
                         newDescription.text.toString()
                     )
                     blockViewModel.addBlock(newBlock)
@@ -63,14 +63,14 @@ class AddFragment : Fragment() {
 
             "mobList" -> {
                 val newName: EditText = view.findViewById(R.id.editTextName)
-                val newURL: EditText = view.findViewById(R.id.imageURLAdd)
+                val newURL: EditText? = view.findViewById(R.id.imageURLAdd)
                 val newDescription: EditText = view.findViewById(R.id.editTextDescription)
 
                 saveButton = view.findViewById(R.id.saveAll)
                 saveButton.setOnClickListener {
                     val newMob = Mob(
                         newName.text.toString(),
-                        newURL.text.toString(),
+                        newURL?.text.toString(),
                         newDescription.text.toString()
                     )
                     mobViewModel.addMob(newMob)
@@ -85,14 +85,14 @@ class AddFragment : Fragment() {
             "itemList" -> {
 
                 val newName: EditText = view.findViewById(R.id.editTextName)
-                val newURL : EditText = view.findViewById(R.id.imageURLAdd)
+                val newURL : EditText? = view.findViewById(R.id.imageURLAdd)
                 val newDescription: EditText = view.findViewById(R.id.editTextDescription)
 
                 saveButton = view.findViewById(R.id.saveAll)
                 saveButton.setOnClickListener {
 
                     val newItem = Items(newName.text.toString(),
-                        newURL.text.toString(),
+                        newURL?.text.toString(),
                         newDescription.text.toString())
 
 

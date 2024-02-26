@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mineexplore.Block
+import com.example.mineexplore.R
 import com.example.mineexplore.databinding.FragmentContentBinding
 import com.squareup.picasso.Picasso
 
@@ -39,13 +40,18 @@ class BlockAdapter(private val viewModel: BlockViewModel) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        viewModel.blocks.value?.get(position)?.let {block ->
+        val block = viewModel.blocks.value?.get(position)
+        if (block != null) {
             holder.nameTextView.text = block.nombre
-            Picasso.get().load(block.imageURL).into(holder.imageView)
+            if (!block.imageURL.isNullOrEmpty()) {
+                Picasso.get().load(block.imageURL).into(holder.imageView)
+            } else {
+                holder.imageView.setImageResource(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
+        } else {
+
         }
-
     }
-
 
     override fun getItemCount(): Int {
         return viewModel.blocks.value?.size ?: 0

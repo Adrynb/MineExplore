@@ -12,6 +12,18 @@
             android:icon="@drawable/ic_launcher_background"
             android:title="Cambiar foto" />
         <item
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_gato"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="Gato foto" />
+        <item
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_musica"
+            android:icon="@android:drawable/star_big_on"
+            android:title="Música" />
+        <item
             android:id="@+id/menu_copyright"
             android:icon="@android:drawable/stat_sys_warning"
             android:title="Copyright" />

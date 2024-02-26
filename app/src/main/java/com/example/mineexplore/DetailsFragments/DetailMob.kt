@@ -43,7 +43,12 @@ class DetailMob : Fragment() {
             mob?.let {
                 nombreMobDetail.text = it.nombre
                 descripcionMobDetail.text = it.descripcion
-                Picasso.get().load(it.imageURL).into(imagenMobDetail)
+                if(!mob.imageURL.isNullOrEmpty()){
+                    Picasso.get().load(it.imageURL).into(imagenMobDetail)
+                }
+                else{
+                    imagenMobDetail.setImageResource(com.google.android.material.R.drawable.mtrl_ic_error)
+                }
             }
         }
 

@@ -2,39 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:textAlignment="center">
 
     <!-- TextView para el número de elemento -->
-    <TextView
-        android:id="@+id/item_number"
-        android:layout_width="63dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAppearance="?attr/textAppearanceListItem" />
 
     <!-- TextView para el contenido -->
     <TextView
         android:id="@+id/content"
-        android:layout_width="82dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/white"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <!-- ImageView para la imagen -->
     <ImageView
         android:id="@+id/preImageView"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="0"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
 
     <!-- Button para ver detalles -->
     <Button
         android:id="@+id/seeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
         android:text="VER" />
 
 </LinearLayout>

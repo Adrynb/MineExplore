@@ -5,5 +5,5 @@ import androidx.room.PrimaryKey
 data class Mob(
     @PrimaryKey
     var nombre: String,
-    var imageURL : String,
+    var imageURL : String?,
     var descripcion: String)

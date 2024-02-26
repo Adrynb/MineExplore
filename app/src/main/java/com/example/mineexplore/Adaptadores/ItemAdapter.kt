@@ -48,7 +48,12 @@ class ItemAdapter(private val viewModel: ItemViewModel) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         viewModel.items.value?.get(position)?.let { item ->
             holder.nameTextView.text = item.nombre
-            Picasso.get().load(item.imageURL).into(holder.imageView)
+            if(!item.imageURL.isNullOrEmpty()){
+                Picasso.get().load(item?.imageURL).into(holder.imageView)
+            }
+            else{
+                holder.imageView.setImageResource(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
            }
         }
     }

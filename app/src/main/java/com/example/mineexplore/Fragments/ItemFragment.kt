@@ -54,7 +54,7 @@ class ItemFragment : Fragment() {
         viewModel.selectedItem.observe(viewLifecycleOwner, Observer { selectedItem ->
             selectedItem?.let {
                 parentFragmentManager.beginTransaction().apply {
-                    replace(R.id.fragment_container, DetailMob.newInstance())
+                    replace(R.id.fragment_container, DetailItem.newInstance())
                     commit()
                 }
             }

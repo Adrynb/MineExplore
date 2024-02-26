@@ -9,7 +9,7 @@ import com.example.mineexplore.DAO.BlockDao
 import com.example.mineexplore.DAO.ItemsDao
 import com.example.mineexplore.DAO.MobDao
 
-@Database(entities = [Mob::class, Block::class, Items::class], version = 3, exportSchema = false)
+@Database(entities = [Mob::class, Block::class, Items::class], version = 5, exportSchema = false)
 
 
 abstract class AppDataBase : RoomDatabase() {

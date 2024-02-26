@@ -29,13 +29,17 @@ class DetailBlock : Fragment() {
         val descripcionDetailTextView = view.findViewById<TextView>(R.id.descripcionBlockDetail)
         val imageURLDetailImageView = view.findViewById<ImageView>(R.id.imagenDetailBlock)
 
-        viewModel.selectedBlock.observe(viewLifecycleOwner) {
-            block -> block?.let {
-            nombreDetailTextView.text = block.nombre
-            descripcionDetailTextView.text = block.descripcion
-            Picasso.get().load(it.imageURL).into(imageURLDetailImageView)
-        }
-        }
+        viewModel.selectedBlock.observe(viewLifecycleOwner, Observer { block ->
+            block?.let {
+                nombreDetailTextView.text = block.nombre
+                descripcionDetailTextView.text = block.descripcion
+                if (!block.imageURL.isNullOrEmpty()) {
+                    Picasso.get().load(block.imageURL).into(imageURLDetailImageView)
+                } else {
+                    imageURLDetailImageView.setImageResource(com.google.android.material.R.drawable.mtrl_ic_error)
+                }
+            }
+        })
 
         view.findViewById<FloatingActionButton>(R.id.floatingDetailBlock).setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
@@ -45,7 +49,7 @@ class DetailBlock : Fragment() {
             viewModel.deleteBlock()
         }
 
-
         return view
     }
 }
+

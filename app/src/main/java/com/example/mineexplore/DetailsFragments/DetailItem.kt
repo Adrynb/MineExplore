@@ -38,7 +38,13 @@ class DetailItem : Fragment(){
         viewModel.selectedItem.observe(viewLifecycleOwner, Observer { item ->
             nombreDetailItem.text = item?.nombre
             descripcionDetailItem.text = item?.descripcion
-            Picasso.get().load(item?.imageURL).into(imagenDetailItem)
+            if(!item?.imageURL.isNullOrEmpty()){
+                Picasso.get().load(item?.imageURL).into(imagenDetailItem)
+            }
+            else{
+                imagenDetailItem.setImageResource(com.google.android.material.R.drawable.mtrl_ic_error)
+            }
+
         })
 
         view.findViewById<FloatingActionButton>(R.id.floatingDetailItemButton).setOnClickListener{
@@ -50,6 +56,7 @@ class DetailItem : Fragment(){
         borrarButton.setOnClickListener{
 
             viewModel.deleteItem()
+            requireActivity().supportFragmentManager.popBackStack()
 
         }
 
